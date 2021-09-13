@@ -1,5 +1,8 @@
 # CircleCI Orb for using Tailscale
 
+Orb: https://circleci.com/developer/orbs/orb/threecomma/circleci-tailscale
+
+
 ## Quick Start Guide
 Use CircleCI version 2.1 at the top of your `.circleci/config.yml` file.
 ```
@@ -30,7 +33,7 @@ This makes it compatible with various applications like `curl` that respect thes
 Here is a sample `.circleci/config.yml`
 If you would like to change the tailscale version you can set the parameter `tailscale-version`.
 
-> *WARNING*: Tailscale versions < XXX did not handle environments CircleCI correctly. [Issue #2827](https://github.com/tailscale/tailscale/issues/2827) resolves this bug.
+> *WARNING*: Tailscale versions < XXX did not handle build environments such as CircleCI correctly. [Issue #2827](https://github.com/tailscale/tailscale/issues/2827) resolves this bug.
 
 ```yaml
 version: 2.1
@@ -57,3 +60,9 @@ jobs:
               sleep 1
              done
 ```
+
+## Parameters
+| Parameter          | Description                                              | Default Value |
+|--------------------|----------------------------------------------------------|---------------|
+| tailscale-auth-key | Your Tailscale authentication key, from the admin panel. |               |
+| tailscale-version  | Tailscale version to use.                                |     1.14.0    |
