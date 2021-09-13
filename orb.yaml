@@ -1,0 +1,54 @@
+version: 2.1
+description: >
+  CircleCI Orb for using Tailscale
+
+display:
+  home_url: "https://github.com/ThreeCommaIO/circleci-tailscale"
+  source_url: "https://github.com/ThreeCommaIO/circleci-tailscale"
+
+commands:
+  connect:
+    description: Connect tailscale
+    parameters:
+      tailscale-auth-key:
+        type: env_var_name
+        description: Your Tailscale authentication key, from the admin panel.
+        default: TAILSCALE_AUTH_KEY
+      tailscale-version:
+        type: string
+        description: Tailscale version to use.
+        default: "1.14.0"
+    steps:
+      - run:
+          name: 'Download tailscale'
+          command: |
+            VERSION=<< parameters.tailscale-version >>
+            MINOR=$(echo << parameters.tailscale-version >> | awk -F '.' {'print $2'})
+            if [ $((MINOR % 2)) -eq 0 ]; then
+              URL="https://pkgs.tailscale.com/stable/tailscale_${VERSION}_amd64.tgz"
+            else
+              URL="https://pkgs.tailscale.com/unstable/tailscale_${VERSION}_amd64.tgz"
+            fi
+            curl $URL -o tailscale.tgz
+            tar -C ${HOME} -xzf tailscale.tgz
+            rm tailscale.tgz
+            TSPATH=${HOME}/tailscale_${VERSION}_amd64
+            sudo mv "${TSPATH}/tailscale" "${TSPATH}/tailscaled" /usr/bin
+      - run:
+          name: 'Run tailscale'
+          background: true
+          command: |
+            sudo tailscaled --tun=userspace-networking --socks5-server=localhost:1055 2>~/tailscaled.log
+      - run:
+          name: 'Auth tailscale'
+          command: |
+            HOSTNAME="circleci-$(cat /etc/hostname)"
+            until sudo tailscale up --authkey ${<< parameters.tailscale-auth-key >>} --hostname=${HOSTNAME} --accept-routes
+            do
+              sleep 1
+            done
+            echo "export ALL_PROXY=socks5h://localhost:1055/" >> $BASH_ENV
+            echo "export HTTP_PROXY=socks5h://localhost:1055/" >> $BASH_ENV
+            echo "export HTTPS_PROXY=socks5h://localhost:1055/" >> $BASH_ENV
+            echo "export http_proxy=socks5h://localhost:1055/" >> $BASH_ENV
+            echo "export https_proxy=socks5h://localhost:1055/" >> $BASH_ENV
