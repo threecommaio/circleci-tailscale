@@ -52,7 +52,6 @@ jobs:
       - run:
           name: curl a tailscale machine over port 8080
           command: |
-            env
              until curl "http://[machine].[namespace].beta.tailscale.net:8080/"
              do
               sleep 1
