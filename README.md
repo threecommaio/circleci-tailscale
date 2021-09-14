@@ -33,7 +33,7 @@ This makes it compatible with various applications like `curl` that respect thes
 Here is a sample `.circleci/config.yml`
 If you would like to change the tailscale version you can set the parameter `tailscale-version`.
 
-> *WARNING*: Tailscale versions < XXX did not handle build environments such as CircleCI correctly. [Issue #2827](https://github.com/tailscale/tailscale/issues/2827) resolves this bug.
+> *WARNING*: Tailscale versions < 1.15.116 did not handle build environments such as CircleCI correctly. [Issue #2827](https://github.com/tailscale/tailscale/issues/2827) resolves this bug.
 
 ```yaml
 version: 2.1
