@@ -65,4 +65,4 @@ jobs:
 | Parameter          | Description                                              | Default Value |
 |--------------------|----------------------------------------------------------|---------------|
 | tailscale-auth-key | Your Tailscale authentication key, from the admin panel. |               |
-| tailscale-version  | Tailscale version to use.                                |     1.14.0    |
+| tailscale-version  | Tailscale version to use.                                |     1.15.116  |
