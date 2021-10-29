@@ -17,10 +17,10 @@ commands:
       tailscale-version:
         type: string
         description: Tailscale version to use.
-        default: "1.15.116"
+        default: "1.16.1"
     steps:
       - run:
-          name: 'Download tailscale'
+          name: "Download tailscale"
           command: |
             VERSION=<< parameters.tailscale-version >>
             MINOR=$(echo << parameters.tailscale-version >> | awk -F '.' {'print $2'})
@@ -35,12 +35,12 @@ commands:
             TSPATH=${HOME}/tailscale_${VERSION}_amd64
             sudo mv "${TSPATH}/tailscale" "${TSPATH}/tailscaled" /usr/bin
       - run:
-          name: 'Run tailscale'
+          name: "Run tailscale"
           background: true
           command: |
             sudo tailscaled --tun=userspace-networking --socks5-server=localhost:1055 2>~/tailscaled.log
       - run:
-          name: 'Auth tailscale'
+          name: "Auth tailscale"
           command: |
             HOSTNAME="circleci-$(cat /etc/hostname)"
             until sudo tailscale up --authkey ${<< parameters.tailscale-auth-key >>} --hostname=${HOSTNAME} --accept-routes
