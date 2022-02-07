@@ -3,8 +3,8 @@ description: >
   CircleCI Orb for using Tailscale
 
 display:
-  home_url: "https://github.com/ThreeCommaIO/circleci-tailscale"
-  source_url: "https://github.com/ThreeCommaIO/circleci-tailscale"
+  home_url: "https://github.com/threecommaio/circleci-tailscale"
+  source_url: "https://github.com/threecommaio/circleci-tailscale"
 
 commands:
   connect:
