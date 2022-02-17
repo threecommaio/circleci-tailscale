@@ -38,12 +38,12 @@ commands:
           name: "Run tailscale"
           background: true
           command: |
-            sudo tailscaled --tun=userspace-networking --socks5-server=localhost:1055 2>~/tailscaled.log
+            tailscaled --tun=userspace-networking --socks5-server=localhost:1055 --socket=/tmp/tailscaled.sock 2>~/tailscaled.log
       - run:
           name: "Auth tailscale"
           command: |
             HOSTNAME="circleci-$(cat /etc/hostname)"
-            until sudo tailscale up --authkey ${<< parameters.tailscale-auth-key >>} --hostname=${HOSTNAME} --accept-routes
+            until tailscale --socket=/tmp/tailscaled.sock up --authkey ${<< parameters.tailscale-auth-key >>} --hostname=${HOSTNAME} --accept-routes
             do
               sleep 1
             done
