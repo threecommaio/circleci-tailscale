@@ -17,7 +17,7 @@ commands:
       tailscale-version:
         type: string
         description: Tailscale version to use.
-        default: "1.16.1"
+        default: "1.20.4"
     steps:
       - run:
           name: "Download tailscale if not installed"

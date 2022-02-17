@@ -16,7 +16,7 @@ Add the orbs stanza below your version, invoking the orb:
 
 ```
 orbs:
-  circleci-tailscale: threecomma/circleci-tailscale@1.0.0
+  circleci-tailscale: threecomma/circleci-tailscale@2.0.0
 ```
 
 1. Goto the [Tailscale Admin Console](https://login.tailscale.com/admin/settings/authkeys) and create a new `Auth Key`. Select `Ephemeral Key`
@@ -38,7 +38,7 @@ If you would like to change the tailscale version you can set the parameter `tai
 version: 2.1
 
 orbs:
-  circleci-tailscale: threecomma/circleci-tailscale@1.1.0
+  circleci-tailscale: threecomma/circleci-tailscale@2.0.0
 
 jobs:
   build:
@@ -65,4 +65,4 @@ jobs:
 | Parameter          | Description                                              | Default Value |
 | ------------------ | -------------------------------------------------------- | ------------- |
 | tailscale-auth-key | Your Tailscale authentication key, from the admin panel. |               |
-| tailscale-version  | Tailscale version to use.                                | 1.16.1        |
+| tailscale-version  | Tailscale version to use.                                | 1.20.4        |
