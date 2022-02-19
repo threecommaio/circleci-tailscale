@@ -43,7 +43,7 @@ commands:
           name: "Run tailscale"
           background: true
           command: |
-            tailscaled --tun=userspace-networking --socks5-server=localhost:1055 --socket=/tmp/tailscaled.sock 2>~/tailscaled.log
+            tailscaled --tun=userspace-networking --outbound-http-proxy-listen=localhost:1054 --socks5-server=localhost:1055 --socket=/tmp/tailscaled.sock 2>~/tailscaled.log
       - run:
           name: "Auth tailscale"
           command: |
@@ -53,7 +53,7 @@ commands:
               sleep 1
             done
             echo "export ALL_PROXY=socks5h://localhost:1055/" >> $BASH_ENV
-            echo "export HTTP_PROXY=socks5h://localhost:1055/" >> $BASH_ENV
-            echo "export HTTPS_PROXY=socks5h://localhost:1055/" >> $BASH_ENV
-            echo "export http_proxy=socks5h://localhost:1055/" >> $BASH_ENV
-            echo "export https_proxy=socks5h://localhost:1055/" >> $BASH_ENV
+            echo "export HTTP_PROXY=http://localhost:1054/" >> $BASH_ENV
+            echo "export HTTPS_PROXY=http://localhost:1054/" >> $BASH_ENV
+            echo "export http_proxy=http://localhost:1054/" >> $BASH_ENV
+            echo "export https_proxy=http://localhost:1054/" >> $BASH_ENV
