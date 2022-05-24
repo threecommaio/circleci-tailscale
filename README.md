@@ -48,6 +48,9 @@ jobs:
       tailscale-auth-key:
         type: env_var_name
         default: TAILSCALE_AUTH_KEY
+      tailscale-proxy-address:
+        type: string
+        default: localhost
     steps:
       - checkout
       - circleci-tailscale/connect
@@ -62,7 +65,8 @@ jobs:
 
 ## Parameters
 
-| Parameter          | Description                                              | Default Value |
-| ------------------ | -------------------------------------------------------- | ------------- |
-| tailscale-auth-key | Your Tailscale authentication key, from the admin panel. |               |
-| tailscale-version  | Tailscale version to use.                                | 1.20.4        |
+| Parameter               | Description                                              | Default Value |
+| ----------------------- | -------------------------------------------------------- | ------------- |
+| tailscale-auth-key      | Your Tailscale authentication key, from the admin panel. |               |
+| tailscale-proxy-address | Proxy address where tailscale should listen.             | localhost     |
+| tailscale-version       | Tailscale version to use.                                | 1.20.4        |
