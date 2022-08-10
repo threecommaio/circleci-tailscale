@@ -1,0 +1,7 @@
+version: 2.1
+description: >
+  CircleCI Orb for connecting to [Tailscale VPN](https://tailscale.com/).
+
+display:
+  home_url: "https://github.com/threecommaio/circleci-tailscale"
+  source_url: "https://github.com/threecommaio/circleci-tailscale"
