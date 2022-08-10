@@ -1,0 +1,32 @@
+description: Connect tailscale
+parameters:
+  tailscale-auth-key:
+    type: env_var_name
+    description: Your Tailscale authentication key, from the admin panel.
+    default: TAILSCALE_AUTH_KEY
+  tailscale-proxy-address:
+    type: string
+    description: Proxy address where tailscale should listen.
+    default: localhost
+  tailscale-version:
+    type: string
+    description: Tailscale version to use.
+    default: "1.24.2"
+steps:
+  - run:
+      name: "Download tailscale if not installed"
+      environment:
+        VERSION: "<<parameters.tailscale-version>>"
+      command: <<include(scripts/download.sh)>>
+  - run:
+      name: "Run tailscale"
+      background: true
+      environment:
+        PROXY: "<<parameters.tailscale-proxy-address>>"
+      command: <<include(scripts/run.sh)>>
+  - run:
+      name: "Auth tailscale"
+      environment:
+        TAILSCALE_AUTH_KEY: "<<parameters.tailscale-auth-key>>"
+        PROXY: "<<parameters.tailscale-proxy-address>>"
+      command: <<include(scripts/auth.sh)>>

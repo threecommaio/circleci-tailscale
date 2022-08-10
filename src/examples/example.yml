@@ -1,0 +1,22 @@
+description: >
+  1. Set the `TAILSCALE_AUTH_KEY` via your CircleCI project settings or
+     create a context containing it.
+  2. In the job that needs a tailscale VPN connection, run the
+     `circleci-tailscale/connect` step.
+     - Make sure that job uses the context with `TAILSCALE_AUTH_KEY`,
+       if you use contexts instead of project settings.
+usage:
+  version: 2.1
+  orbs:
+    circleci-tailscale: threecomma/circleci-tailscale@2.2.0
+  jobs:
+    job-with-tailscale:
+      docker:
+        - image: cimg/base
+      steps:
+        - circleci-tailscale/connect
+  workflows:
+    workflow-with-tailscale:
+      jobs:
+        - job-with-tailscale:
+            context: <context-with-TAILSCALE_AUTH_KEY>
