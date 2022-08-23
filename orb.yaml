@@ -22,6 +22,9 @@ commands:
         type: string
         description: Tailscale version to use.
         default: "1.24.2"
+      tailscale-export-proxies:
+        type: boolean
+        default: true
     steps:
       - run:
           name: "Download tailscale if not installed"
@@ -56,8 +59,15 @@ commands:
             do
               sleep 1
             done
-            echo "export ALL_PROXY=socks5h://<< parameters.tailscale-proxy-address >>:1055/" >> $BASH_ENV
-            echo "export HTTP_PROXY=http://<< parameters.tailscale-proxy-address >>:1054/" >> $BASH_ENV
-            echo "export HTTPS_PROXY=http://<< parameters.tailscale-proxy-address >>:1054/" >> $BASH_ENV
-            echo "export http_proxy=http://<< parameters.tailscale-proxy-address >>:1054/" >> $BASH_ENV
-            echo "export https_proxy=http://<< parameters.tailscale-proxy-address >>:1054/" >> $BASH_ENV
+      - when:
+          condition:
+            equal: [true, << parameters.tailscale-export-proxies >>]
+          steps:
+            - run:
+                name: "Proxy all connections to tailscale"
+                command: |
+                  echo "export ALL_PROXY=socks5h://<< parameters.tailscale-proxy-address >>:1055/" >> $BASH_ENV
+                  echo "export HTTP_PROXY=http://<< parameters.tailscale-proxy-address >>:1054/" >> $BASH_ENV
+                  echo "export HTTPS_PROXY=http://<< parameters.tailscale-proxy-address >>:1054/" >> $BASH_ENV
+                  echo "export http_proxy=http://<< parameters.tailscale-proxy-address >>:1054/" >> $BASH_ENV
+                  echo "export https_proxy=http://<< parameters.tailscale-proxy-address >>:1054/" >> $BASH_ENV
